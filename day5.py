@@ -13,9 +13,8 @@ def solve(intcode, verb):
 
   while True:
     op = intcode[cur]
-    mode1 = digit(op, 2)
-    mode2 = digit(op, 3)
-    mode3 = digit(op, 4)
+
+    modes = [(op // 10**n) % 10 for n in range(2,5)]
 
     op = op % 100
 
@@ -24,15 +23,15 @@ def solve(intcode, verb):
 
     # Addition
     if op == 1:
-      val1 = get(intcode, cur, 1, mode1)
-      val2 = get(intcode, cur, 2, mode2)
+      val1 = get(intcode, cur, 1, modes[0])
+      val2 = get(intcode, cur, 2, modes[1])
       put(intcode, cur, 3, val1 + val2)
       cur +=4
 
     # Multiply
     elif op == 2:
-      val1 = get(intcode, cur, 1, mode1)
-      val2 = get(intcode, cur, 2, mode2)
+      val1 = get(intcode, cur, 1, modes[0])
+      val2 = get(intcode, cur, 2, modes[1])
       put(intcode, cur, 3, val1 * val2)
       cur +=  4
 
@@ -49,8 +48,8 @@ def solve(intcode, verb):
     # Jump-if-true: If the first param is non-zero, set instruction cur
     # to the value of the second param, else do nothing
     elif op == 5: 
-      val1 = get(intcode, cur, 1, mode1)
-      val2 = get(intcode, cur, 2, mode2)
+      val1 = get(intcode, cur, 1, modes[0])
+      val2 = get(intcode, cur, 2, modes[1])
       if val1 != 0:
         cur = val2
       else:
@@ -58,8 +57,8 @@ def solve(intcode, verb):
     
     # jump-if-false
     elif op == 6:
-      val1 = get(intcode, cur, 1, mode1)
-      val2 = get(intcode, cur, 2, mode2)
+      val1 = get(intcode, cur, 1, modes[0])
+      val2 = get(intcode, cur, 2, modes[1])
       if val1 == 0:
         cur = val2
       else:
@@ -67,15 +66,15 @@ def solve(intcode, verb):
 
     # Check less than
     elif op == 7:  # less than
-      val1 = get(intcode, cur, 1, mode1)
-      val2 = get(intcode, cur, 2, mode2)
+      val1 = get(intcode, cur, 1, modes[0])
+      val2 = get(intcode, cur, 2, modes[1])
       put(intcode, cur, 3, 1 if val1 < val2 else 0)
       cur += 4
     
     # Check equality
     elif op == 8:
-      val1 = get(intcode, cur, 1, mode1)
-      val2 = get(intcode, cur, 2, mode2)
+      val1 = get(intcode, cur, 1, modes[0])
+      val2 = get(intcode, cur, 2, modes[1])
       put(intcode, cur, 3, 1 if val1 == val2 else 0)
       cur += 4
     else:
