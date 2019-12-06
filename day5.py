@@ -95,10 +95,6 @@ def put(intcode, cur, param, value):
   pos = cur + param
   intcode[intcode[pos]] = value
 
-# 
-def digit(number, n):
-  return number // 10**n % 10
-
 
 intcode1 = file_reader('day5.in')
 intcode2 = file_reader('day5.in')
