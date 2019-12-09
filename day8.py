@@ -24,5 +24,12 @@ def solve(width, height):
             ans = cur_layer.count('1')*cur_layer.count('2')
     print("Part 1 :", ans)
 
+    for i in range(num_pixels):
+        for j in range(num_layers):
+            if data[(j*num_pixels)+i] != "2":
+                print("X" if data[(j*num_pixels)+i] == "1" else " ", end="")
+                break
+        if (i+1) % width == 0:
+            print()
 
 solve(25, 6)
